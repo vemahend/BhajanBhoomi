@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+        }
+
+        .blog-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .blog-post {
+            width: calc(50% - 10px); /* 50% width with a little space between */
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+
+        .blog-post:hover {
+            transform: scale(1.02);
+        }
+
+        .blog-post img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+	    width: 100%
+        }
+
+        .blog-post-content {
+            flex: 1;
+        }
+
+        .blog-post-title {
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+
+        .blog-post-summary {
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+        }
+
+        .back-button a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-button a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            background-color: green;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Sidebar Search Container */
+        .search-sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px; /* Start off-screen */
+            width: 300px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 1000; /* Ensure it's above other content */
+        }
+
+        .search-sidebar.active {
+            right: 0; /* Slide in when active */
+        }
+
+        .search-sidebar-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .search-container {
+            padding: 20px;
+        }
+
+        .search-container input[type="text"] {
+            width: calc(100% - 20px);
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .search-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Styling for Toggle Button */
+        .toggle-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .blog-post {
+                width: 100%; /* Full width for smaller screens */
+                margin-right: 0; /* No margin on right side */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bhajan Bhoomi</h1>
+        <p>Welcome to our Bhajan Bhoomi page</p>
+<button class="toggle-button" onclick="toggleSearchSidebar()">Toggle Search Panel</button>	
+    </div>
+
+    <!-- Sidebar Search Container -->
+    <div class="search-sidebar" id="searchSidebar">
+        <div class="search-sidebar-header">
+            Search
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button onclick="searchBlog()">Search</button>
+        </div>
+    </div>
+
+    <!-- Main Blog Container -->
+    <div class="blog-container">
+        <!-- First Blog Post -->
+        <div class="blog-post" onclick="openPost('Hanuman.html')">
+            <img src="HanumanJI.jpg" alt="Blog Post Image">
+            <div class="blog-post-content">
+                <h2 class="blog-post-title">Hanuman Chalisa</h2>
+                <p class="blog-post-summary">श्रीगुरु चरन सरोज रज, निजमन मुकुरु सुधारि।</p>
+                <p class="blog-post-summary">बरनउं रघुबर बिमल जसु, जो दायक फल चारि।।</p>
+                <p class="blog-post-summary">बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।</p>
+                <p class="blog-post-summary">बल बुधि बिद्या देहु मोहिं, हरहु कलेस बिकार।।</p>
+		<a href="#" onclick="openPost('SankatMochan.html')"><h3>Read More....<h3></a> 
+            </div>
+        </div>
+
+        <!-- Second Blog Post -->
+        <div class="blog-post" onclick="openPost('SankatMochan.html')">
+            <img src="HanjimanJiSankatMochan.jpg" alt="Blog Post Image">
+            <div class="blog-post-content">
+                <h2 class="blog-post-title">Sankat Mochan</h2>
+                <p>बाल समय रवि भक्षी लियो तब,</p>
+		<p>तीनहुं लोक भयो अंधियारों।</p>
+		<p>ताहि सों त्रास भयो जग को,</p>
+		<p>यह संकट काहु सों जात न टारो।</p>
+		<a href="#" onclick="openPost('SankatMochan.html')"><h3>Read More....<h3></a> 
+            </div>
+        </div>
+
+        <!-- Third Blog Post -->
+        <div class="blog-post" onclick="openPost('post3.html')">
+            <img src="https://via.placeholder.com/200" alt="Blog Post Image">
+            <div class="blog-post-content">
+                <h2 class="blog-post-title">Blog Post 3</h2>
+                <p class="blog-post-summary">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openPost(url) {
+            window.open(url, '_blank');
+        }
+
+        function toggleSearchSidebar() {
+            var searchSidebar = document.getElementById('searchSidebar');
+            searchSidebar.classList.toggle('active');
+        }
+
+        function searchBlog() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var blogPosts = document.getElementsByClassName('blog-post');
+
+            for (var i = 0; i < blogPosts.length; i++) {
+                var title = blogPosts[i].getElementsByClassName('blog-post-title')[0];
+                var summary = blogPosts[i].getElementsByClassName('blog-post-summary');
+                var found = false;
+
+                // Check if input matches title or summary
+                if (title.innerText.toLowerCase().includes(input)) {
+                    found = true;
+                } else {
+                    for (var j = 0; j < summary.length; j++) {
+                        if (summary[j].innerText.toLowerCase().includes(input)) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Show or hide blog post based on search result
+                if (found) {
+                    blogPosts[i].style.display = '';
+                } else {
+                    blogPosts[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
